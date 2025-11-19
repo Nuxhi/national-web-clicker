@@ -16,9 +16,10 @@ app.add_middleware(
 compteur = 0
 
 
+
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello World server is running!"}
 
 
 @app.get("/items/{item_id}")
