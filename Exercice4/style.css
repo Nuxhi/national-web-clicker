@@ -1,0 +1,121 @@
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color-2);
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --text-color: #db2727;
+  --secondary-color: #2ecc71;
+  --font-family: "Arial, sans-serif";
+  --background-color: #333333;
+  --background-color-2: rgb(241, 241, 241);
+  --text-white: rgb(255, 255, 255);
+  --text-orange: #ff5522;
+  --text-orange-font-weight: 500;
+  --a-blue-font-weight: 500;
+  --cas-theme-primary: #153e50;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.a-blue {
+  font-weight: var(--a-blue-font-weight);
+  color: var(--cas-theme-primary);
+  text-decoration: underline;
+}
+
+.button-style-1 {
+  background-color: var(--background-color-2);
+  color: var(--text-orange);
+  border: 2px solid var(--text-orange);
+  width: 125px;
+  margin-top: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.button-style-1:hover {
+  transition: 0.5s;
+  background-color: var(--text-orange);
+  color: var(--text-white);
+}
+
+.texte-orange {
+  color: var(--text-orange);
+  font-weight: var(--text-orange-font-weight);
+}
+
+.login-container {
+  background-color: white;
+  margin: 50px 0px;
+  padding: 15px 0px;
+  margin-left: 25%;
+  margin-right: 25%;
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-container .login {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.login-container .login input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-texte {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.second-container {
+  color: var(--text-orange);
+  font-weight: var(--text-orange-font-weight);
+
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.login-incription {
+  display: flex;
+  margin-top: 25px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-incription button {
+  margin-left: 2%;
+}
+
+.login-exterieur {
+  display: flex;
+  margin-top: 25px;
+  padding: 15px;
+  background-color: white;
+
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-exterieur button {
+  margin-left: 2%;
+}
+
+/*FAIRE LES MEDIA*/
