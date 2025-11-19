@@ -37,6 +37,8 @@ html = """
 </html>
 """
 
+active_clients = {}
+
 class Manager:
 
     websocket_id_map = {}
@@ -76,14 +78,16 @@ class Client:
 async def get():
     return HTMLResponse(html)
 
-
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     user = Client(websocket)
     await user.connect()
+    active_clients[user.id] = websocket
 
-    for ws in Manager.websocket_id_map.values():
-        await ws.send_text(f"client {user.id} connecté\n{Manager.websocket_id_map}")
-    
+    for ws in active_clients.values():
+        try:
+            await ws.send_text(f"client {user.id} connecté")
+        except:
+            pass
     while True:
         await websocket.receive_text()
