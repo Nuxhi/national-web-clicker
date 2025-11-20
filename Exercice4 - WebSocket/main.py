@@ -46,6 +46,7 @@ class Manager:
         # Ajoute une correspondance entre un identifiant et le websocket
         Manager.websocket_id_map[uid] = websocket
 
+    #actuellement inutile
     def show_t_uid(self, uid):
         # Retourne le websocket associé à l'identifiant demandé
         return Manager.websocket_id_map[uid]
