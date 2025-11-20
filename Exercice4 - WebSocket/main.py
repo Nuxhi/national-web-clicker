@@ -89,6 +89,10 @@ class Client:
 async def get():
     return HTMLResponse(html)
 
+@app.get("/test")
+async def get_count():
+    return "+0+ = otot ɐ etet"
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     user = Client(websocket)                #on créer un objet user de la classe Client
@@ -111,6 +115,7 @@ async def websocket_endpoint(websocket: WebSocket):
                  await ws.send_text(f"Client {user.id} : {data}")
                     
     except WebSocketDisconnect:
+        
         message = await user.disconnect()
         # Notifier tous les autres clients de la déconnexion
         for ws in Manager.websocket_id_map.values():
