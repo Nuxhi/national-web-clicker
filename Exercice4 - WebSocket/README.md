@@ -15,6 +15,9 @@ Un petit site web dynamique avec un compteur de clics (projet pédagogique).
 **Installer les dépendances**
 Exécuter ces commandes dans PowerShell ou un terminal :
 
+> [!NOTE]
+> Il vous sera nécessaire d'installer les dépendances suivantes :
+
 ```powershell
 pip install fastapi uvicorn
 ```
@@ -49,7 +52,7 @@ cd static
 python -m http.server 3000
 ```
 
-Puis ouvrez `http://127.0.0.1:3000` dans votre navigateur.
+sur votre navigateur : 127.0.0.1:3000 [LocalHost](http://127.0.0.1:3000/)
 
 **Dépannage / arrêter un serveur bloqué (Windows)**
 Si le port (par exemple `8000`) est déjà utilisé :
