@@ -72,7 +72,7 @@ class Client:
         return f"{self.id} déconnecté"              #inutile je crois, mais par principe
 
 
-#on créer un objet user de la classe Client
+
 
 @app.get("/")
 async def get():
@@ -80,11 +80,14 @@ async def get():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    user = Client(websocket)
-    await user.connect()
-    active_clients[user.id] = websocket
+    user = Client(websocket)                #on créer un objet user de la classe Client
+    await user.connect()                    #on demande a la classe d'établie une connexion
+    active_clients[user.id] = websocket     #on stock le websocket dans le dictionnaire des clients actifs
 
-    for ws in active_clients.values():
+    for ws in active_clients.values():      #on notifie tous les clients connectés qu'un nouveau client est connecté
+    
+    #/!\ attention, aucune gestion de suppresion de websocket mort présent dans le code
+    #alors on ignore les erreurs d'envoi afin d'éviter le crash du serveur
         try:
             await ws.send_text(f"client {user.id} connecté")
         except:
