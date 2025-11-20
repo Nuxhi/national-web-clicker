@@ -1,16 +1,34 @@
 # national-web-clicker
 a dynamic website with a useless click counter
 
-pip install FastApi
-Pip install Uvicorn
 
-CD repo
-Uvicorn main:app --reload
+> [!NOTE]
+> Il vous sera néssaisaire d'installer les dépendances suivante :
 
-en cas de crash :
-dans un cmd : netstat -ano | findstr :8000
-puis taskkill /PID <pid> /F
+```
+-> pip install FastApi
+-> Pip install Uvicorn
+```
 
-start index.html hors host a static server for the page
-python -m http.serve and start 127.0.0.1:3000
+Pour lancer le programme : 
+dans le dossier concerner lancer un terminal 
+
+> cd $RepositoryFiles
+> **Uvicorn main:app --reload**
+
+> maintenant lancer un serveur qui va héberger le site web
+> python -m http.serve
+> sur votre navigateur : 127.0.0.1:3000 [LocalHost](http://127.0.0.1:3000/)
+
+> [!CAUTION]
+> Le serveur peux rencontrer des instabilités pendant les phases de dévelopmenet 
+> En cas derreur voici comment se sortir de cette situation de terminal invinsible
+
+dans un cmd :
+```
+-> netstat -ano | findstr :8000
+-> taskkill /PID <pid> /F
+```
+
+
 
