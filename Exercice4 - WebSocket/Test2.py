@@ -1,4 +1,16 @@
 import random
+
+# Simulation d'un objet WebSocket
+class FakeWebSocket:
+    def __init__(self, name):
+        self.name = name
+    def accept(self):
+        pass
+    def close(self):
+        pass
+    def __str__(self):
+        return f"FakeWebSocket({self.name})"
+
 class Manager:
 
     websocket_id_map = {}
@@ -36,7 +48,7 @@ class Client:
         return f"{self.id} déconnecté"              #inutile je crois, mais par principe
 
 def generation_client():
-    websocket = random.randint(1, 1000)
+    return f"ws{random.randint(1, 1000)}"
 
 user = Client(generation_client())
 
@@ -51,5 +63,14 @@ print(user.websocket)
 print(Manager.websocket_id_map)
 
 
+a = []
+print("test")
 for ws in Manager.websocket_id_map.values():
     print(ws)
+    a.append(ws)
+
+print(a)
+key_to_delete = list(Manager.websocket_id_map.keys())[0]
+del Manager.websocket_id_map[key_to_delete]
+
+print(Manager.websocket_id_map)

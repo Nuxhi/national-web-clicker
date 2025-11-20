@@ -37,7 +37,6 @@ html = """
 </html>
 """
 
-active_clients = {}
 
 class Manager:
 
@@ -53,6 +52,12 @@ class Manager:
     
 
 
+    
+
+###########################################################
+#SI MANAGER EST DETRUIT PLUS RIEN NE FONCTIONNE !!!!!!!!!!!
+###########################################################
+
 class Client:
     id_counter = 0
 
@@ -60,16 +65,21 @@ class Client:
         Client.id_counter += 1                      #incrémentation du compteur pour des id dynamique
         self.id = Client.id_counter                 #attribution d'une id a l'utilisateur
         self.websocket = websocket                  #attribution du websocket
-        Manager(self.id, websocket)                 #Manager va créer une correspodance entre Id et Websocket
+        Manager(self.id, websocket)  #/!\           #Manager va créer une correspodance entre Id et Websocket
                                                     #Utile pour le long terme si l'app devient plus grande.
 
     async def connect(self):
         await self.websocket.accept()               #on établie une connexion
     
     async def disconnect(self):
-        await self.websocket.close()                #on ferme la connexion
-        Manager.websocket_id_map.pop(self.id, None) #ici le none car on va pas se prendre la tete a chercher le websocket 
-        return f"{self.id} déconnecté"              #inutile je crois, mais par principe
+        try:
+            await self.websocket.close()
+        except:
+            pass  # ignore si websocket déjà fermé               #on ferme la connexion
+        #Manager.websocket_id_map.pop(self.id, None) #ici le none car on va pas se prendre la tete a chercher le websocket 
+        Manager.websocket_id_map.pop(self.id, None)
+        return f"{self.id} déconnecté"              #inutile je crois, mais
+
 
 
 
@@ -82,15 +92,42 @@ async def get():
 async def websocket_endpoint(websocket: WebSocket):
     user = Client(websocket)                #on créer un objet user de la classe Client
     await user.connect()                    #on demande a la classe d'établie une connexion
-    active_clients[user.id] = websocket     #on stock le websocket dans le dictionnaire des clients actifs
 
-    for ws in active_clients.values():      #on notifie tous les clients connectés qu'un nouveau client est connecté
-    
+
+
+
+
     #/!\ attention, aucune gestion de suppresion de websocket mort présent dans le code
     #alors on ignore les erreurs d'envoi afin d'éviter le crash du serveur
+    for ws in Manager.websocket_id_map.values():      #on notifie tous les clients connectés qu'un nouveau client est connecté
         try:
             await ws.send_text(f"client {user.id} connecté")
         except:
             pass
-    while True:
-        await websocket.receive_text()
+    
+
+
+
+
+
+    #Gestion de l'envoie de message
+    try:
+           while True:
+               data = await websocket.receive_text()
+               # Broadcast à tous
+               for ws in Manager.websocket_id_map.values():
+                   try:
+                       await ws.send_text(f"Client {user.id} : {data}")
+                   except:
+                       pass
+                    
+    except WebSocketDisconnect:
+        # Ici on appelle correctement disconnect
+        message = await user.disconnect()
+        # Notifier tous les autres clients de la déconnexion
+        for ws in Manager.websocket_id_map.values():
+            try:
+                await ws.send_text(message)
+            except:
+                pass
+        print(message)
