@@ -1,29 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
-    
-    
-    <title>Compteur interactif</title>
-</head>
-<body>
-    <div class="main-container">
-        <h1>Compteur interactif</h1>
-        <div class="compteur">
-            <div id="valeur"> </div>
-            <div class="bouton">
-                <button class="bouton-style" id="plus" onclick="incrementerCompteur()">
-                    +
-                </button>
-                <button class="bouton-style" id="moins" onclick="decrementerCompteur()">
-                    -
-                </button>
-                
-            </div>
-        </div>
-    </div>
-</body>
+<html>
+  <head>
+    <title>Chat</title>
+  </head>
+  <body>
+    <h1>WebSocket Chat</h1>
+    <button>CLICK</button>
+    <form action="" onsubmit="sendMessage(event)">
+      <input type="text" id="messageText" autocomplete="off" />
+      <button>Send</button>
+    </form>
+    <ul id="messages"></ul>
+    <script src="main.js"></script>
+  </body>
 </html>
