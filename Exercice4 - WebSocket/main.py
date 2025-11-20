@@ -76,10 +76,10 @@ class Client:
         try:
             await self.websocket.close()
         except:
-            pass  # ignore si websocket déjà fermé               #on ferme la connexion
-        #Manager.websocket_id_map.pop(self.id, None) #ici le none car on va pas se prendre la tete a chercher le websocket 
+            pass  # ignore si websocket déjà fermé  
+
         Manager.websocket_id_map.pop(self.id, None)
-        return f"{self.id} déconnecté"              #inutile je crois, mais
+        return f"{self.id} déconnecté {Manager.websocket_id_map.values()}"
 
 
 
@@ -96,39 +96,24 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 
-
-
     #/!\ attention, aucune gestion de suppresion de websocket mort présent dans le code
     #alors on ignore les erreurs d'envoi afin d'éviter le crash du serveur
     for ws in Manager.websocket_id_map.values():      #on notifie tous les clients connectés qu'un nouveau client est connecté
-        try:
-            await ws.send_text(f"client {user.id} connecté")
-        except:
-            pass
+        await ws.send_text(f"client {user.id} connecté")
     
-
-
-
-
 
     #Gestion de l'envoie de message
     try:
-           while True:
-               data = await websocket.receive_text()
-               # Broadcast à tous
-               for ws in Manager.websocket_id_map.values():
-                   try:
-                       await ws.send_text(f"Client {user.id} : {data}")
-                   except:
-                       pass
+        while True:
+            data = await websocket.receive_text()
+            # Broadcast à tous
+            for ws in Manager.websocket_id_map.values():
+                 await ws.send_text(f"Client {user.id} : {data}")
                     
     except WebSocketDisconnect:
-        # Ici on appelle correctement disconnect
         message = await user.disconnect()
         # Notifier tous les autres clients de la déconnexion
         for ws in Manager.websocket_id_map.values():
-            try:
-                await ws.send_text(message)
-            except:
-                pass
+            await ws.send_text(message)
+
         print(message)
