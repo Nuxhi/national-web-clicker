@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Chat</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="main.js" defer></script>
+    <title>Document</title>
   </head>
   <body>
-    <h1>WebSocket Chat</h1>
-    <button>CLICK</button>
-    <form action="" onsubmit="sendMessage(event)">
-      <input type="text" id="messageText" autocomplete="off" />
-      <button>Send</button>
-    </form>
-    <ul id="messages"></ul>
-    <script src="main.js"></script>
+    <h1>WEB-CLICKER PROJET</h1>
+
+    <div class="btn-clicker">
+      <div id="compteur">no data load on server</div>
+      <button id="btn-plus" onclick="incrementerCompteur()">
+        COMPTEUR PLUS
+      </button>
+    </div>
+
+    <div class="chatzone">
+      <div class="input-zone">
+        <input type="text" id="TextMessage" />
+        <button onclick="sendMessage()">Envoyer un message</button>
+      </div>
+
+      <div class="chat">
+        <ul id="message-du-chat">
+          <!--Le script va créer des li-->
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
