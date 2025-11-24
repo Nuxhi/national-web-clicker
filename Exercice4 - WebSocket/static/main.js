@@ -1,18 +1,21 @@
 // URL serveur FastAPI
 const API_URL = "http://127.0.0.1:8000";
-var wsCounter = new WebSocket("ws://localhost:8000/ws");
+
+// Création lien de connexions au WebSocket
+var wsCompteur = new WebSocket("ws://localhost:8000/ws");
 var wsChat = new WebSocket("ws://localhost:8000/tchat");
 
-wsCounter.onmessage = function (event) {
+//TOUT CE QUI CONCERNE LE COMPTEUR
+wsCompteur.onmessage = function (event) {
   document.getElementById("Compteur").textContent = event.data;
 };
 
 function incrementerCompteur() {
-  wsCounter.send("+");
+  wsCompteur.send("+");
 }
 
 function decrementerCompteur() {
-  wsCounter.send("-");
+  wsCompteur.send("-");
 }
 
 //TOUT CE QUI CONCERNE LE CHAT
