@@ -20,20 +20,10 @@ Exécuter ces commandes dans PowerShell ou un terminal :
 
 ```powershell
 pip install fastapi uvicorn
-```
-
-Si vous préférez, créez un fichier `requirements.txt` contenant :
-
-```text
-fastapi
-uvicorn
-```
-
-et installez avec :
-
-```powershell
+ou
 pip install -r requirements.txt
 ```
+ou sinon lancer le fichier `install.cmd`
 
 **Lancer l'API (si présente)**
 Dans le dossier contenant `main.py` (l'application FastAPI) :
@@ -42,7 +32,7 @@ Dans le dossier contenant `main.py` (l'application FastAPI) :
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-L'application sera accessible par défaut sur `http://127.0.0.1:8000`.
+L'application sera accessible par défaut sur `http://127.0.0.1:8000` -> [serveur](http://127.0.0.1:8000/).
 
 **Servir les fichiers statiques (UI) localement**
 Pour héberger uniquement le dossier `static` sur le port 3000 (exemple) :
@@ -52,7 +42,13 @@ cd static
 python -m http.server 3000
 ```
 
-sur votre navigateur : 127.0.0.1:3000 [LocalHost](http://127.0.0.1:3000/)
+sur votre navigateur : `127.0.0.1:3000` -> [LocalHost](http://127.0.0.1:3000/)
+
+> ou sinon lancer le `StartProject.cmd`
+> (lancement uniquement du projet en websocket ici)
+
+## ATTENTION CECI EST TRES UTILE : 
+
 
 **Dépannage / arrêter un serveur bloqué (Windows)**
 Si le port (par exemple `8000`) est déjà utilisé :
