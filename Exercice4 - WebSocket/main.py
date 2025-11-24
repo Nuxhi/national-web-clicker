@@ -16,10 +16,12 @@ app.add_middleware(
 )
 
 #L'IP DU SERVEUR DOIT ETRE http://127.0.0.1:8000
-compteur = 50 #on met la valeur du compteur a 0 a chauqe démarage du serveur
+compteur = 0 #on met la valeur du compteur a 0 a chauqe démarage du serveur
+clients = set()
 
-
-
+##################################################
+# SYSTEM DE TCHAT WEBSOCKET POUR APPRRENDRE      #
+##################################################
 
 #################################################
 # Classe utilse a la gestion du chat, Id, Ws
@@ -32,12 +34,6 @@ class Manager:
     def __init__(self, uid, websocket):
         # Ajoute une correspondance entre un identifiant et le websocket
         Manager.websocket_id_map[uid] = websocket
-
-    #actuellement inutile
-    def show_t_uid(self, uid):
-        # Retourne le websocket associé à l'identifiant demandé
-        return Manager.websocket_id_map[uid]
-    
 
 
 ###########################################################
@@ -78,58 +74,13 @@ class Client:
 ##route system
 @app.get("/")
 async def get():
-    return "/go to 127.0.0.1:3000, si vous n'etes pas membre du system vous n'avez rien a faire ici ♥"
+    return "/go to 127.0.0.1:3000, si vous n'etes pas membre du system vous n'avez rien a faire ici ♥ ps : +0+ = otot ɐ etet"
 
-@app.get("/test")
-async def get_count():
-    return "+0+ = otot ɐ etet"
-
-
-##Route compteur
-@app.get("/GetCompteur")
-def get_compteur():
-    '''
-    Permet de mettre a jours la valeur du compteur
-    enlever le system du polling !!!! 
-    '''
-    global compteur
-    return {"compteur": compteur}
-
-
-@app.get("/compteurPlus")
-async def lire_compteur_plus():
-    '''
-    incrémente le compteur de 1
-    '''
-    global compteur
-    compteur += 1
-    for uid,ws in Manager.websocket_id_map.items():
-        try:
-            await ws.send_text(json.dumps({"type": "compteur", "value": compteur}))
-        except:
-            pass
-    # broadcast aux clients connectés
-    # on envoie un JSON indiquant le type "compteur"
-    return {"compteur": compteur}
-
-
-@app.get("/compteurMoins")
-async def compteur_moins():
-    '''
-    décrémente le compteur de 1
-    '''
-    global compteur
-    compteur -= 1
-    return {"compteur": compteur}
-
-
-
-@app.websocket("/ws")
+@app.websocket("/tchat")
 async def websocket_endpoint(websocket: WebSocket):
     user = Client(websocket)                #on créer un objet user de la classe Client
     await user.connect()                    #on demande a la classe d'établie une connexion
     
-
 
     #/!\ attention, aucune gestion de suppresion de websocket mort présent dans le code
     #alors on ignore les erreurs d'envoi afin d'éviter le crash du serveur
@@ -156,3 +107,34 @@ async def websocket_endpoint(websocket: WebSocket):
         print(message)
 
 
+async def broadcast():
+    """Envoie la valeur du compteur à tous les clients."""
+    for ws in list(clients):
+        try:
+            await ws.send_text(str(compteur))
+        except:
+            clients.discard(ws)
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    global compteur
+    await ws.accept()
+    clients.add(ws)
+
+    # envoie la valeur actuelle
+    await ws.send_text(str(compteur))
+
+    try:
+        while True:
+            msg = await ws.receive_text()
+
+            if msg == "+":
+                compteur += 1
+            elif msg == "-":
+                compteur -= 1
+
+            await broadcast()
+
+    except WebSocketDisconnect:
+        clients.discard(ws)
