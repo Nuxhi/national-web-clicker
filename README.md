@@ -16,6 +16,14 @@ Un petit site web dynamique avec un compteur de clics (projet pédagogique).
 Exécuter ces commandes dans PowerShell ou un terminal :
 
 > [!NOTE]
+> Si vous souhaitez **gagner** du temps :
+> Lancez le fichier `install.cmd` puis `StartProject.cmd`.
+> Cela **met à jour** vos dépendances Python, installe les dépendances requises, et lance le serveur ainsi que le client.
+> Sinon, suivez le processus suivant :
+
+
+
+> [!NOTE]
 > Il vous sera nécessaire d'installer les dépendances suivantes :
 
 ```powershell
