@@ -28,6 +28,8 @@ clients = set()
 # SONT INDEPENDANT Lun DE L'AUTRE.
 # IL FAUT DONC BIEN FAIRE ATTENTION A NE PAS MELANGER
 # C'EST CATASTROPHIQUE !!!!!!!!!!!!
+# J'ai juste a faire en sorte que chaque requete websocket
+# soit dirigée un system de gestion global..... 
 ###################################################
 
 
