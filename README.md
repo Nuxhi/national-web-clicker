@@ -23,7 +23,7 @@ Exécuter ces commandes dans PowerShell ou un terminal :
 
 
 
-> [!NOTE]
+
 > Il vous sera nécessaire d'installer les dépendances suivantes :
 
 ```powershell
