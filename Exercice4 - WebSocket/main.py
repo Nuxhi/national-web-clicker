@@ -87,6 +87,12 @@ class Client:
 ## EXERCICE WEBSOCKET
 ################################
 
+##route system
+@app.get("/")
+async def get():
+    return "/go to 127.0.0.1:3000, si vous n'etes pas membre du system vous n'avez rien a faire ici ♥ ps : +0+ = otot ɐ etet"
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(ws: WebSocket):
     global compteur
@@ -115,10 +121,6 @@ async def websocket_endpoint(ws: WebSocket):
 ## BONUS POUR APPRENDRE
 ################################
 
-##route system
-@app.get("/")
-async def get():
-    return "/go to 127.0.0.1:3000, si vous n'etes pas membre du system vous n'avez rien a faire ici ♥ ps : +0+ = otot ɐ etet"
 
 @app.websocket("/tchat")
 async def websocket_endpoint(websocket: WebSocket):
