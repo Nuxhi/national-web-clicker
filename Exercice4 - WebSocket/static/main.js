@@ -8,14 +8,20 @@ var wsChat = new WebSocket("ws://localhost:8000/tchat");
 //TOUT CE QUI CONCERNE LE COMPTEUR
 wsCompteur.onmessage = function (event) {
   document.getElementById("Compteur").textContent = event.data;
+  //A chaque fois qu'un message est reçu du serveur, on met à jour le contenu
+  //de l'élément HTML avec l'ID "Compteur"
 };
 
 function incrementerCompteur() {
   wsCompteur.send("+");
+  //ici on envoie le message "+" au serveur via le WebSocket
+  //il va ensuite vérifié une condition puis faire le traitement
 }
 
 function decrementerCompteur() {
   wsCompteur.send("-");
+  //ici on envoie le message "-" au serveur via le WebSocket
+  //il va ensuite vérifié une condition puis faire le traitement
 }
 
 //TOUT CE QUI CONCERNE LE CHAT
@@ -25,11 +31,17 @@ wsChat.onmessage = function (event) {
   var content = document.createTextNode(event.data);
   message.appendChild(content);
   messages.appendChild(message);
+  //A chaque fois qu'un message est reçu du serveur, on crée un nouvel élément
+  //de liste (<li>) avec le contenu du message, puis on l'ajoute à la liste
+  //des messages dans l'élément HTML avec l'ID "message-du-chat"
 };
 
 function sendMessage(event) {
   var input = document.getElementById("TextMessage");
   wsChat.send(input.value);
   input.value = "";
-  event.preventDefault();
+
+  //ici on envoie le contenu de l'input au serveur via le WebSocket
+  //il va ensuite diffusé le message à tous les clients connectés au WebSocket
+  //on met une valeur par défaut "" dans l'input après envoi
 }
