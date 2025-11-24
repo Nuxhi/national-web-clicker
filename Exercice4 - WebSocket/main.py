@@ -19,6 +19,19 @@ app.add_middleware(
 compteur = 0 #on met la valeur du compteur a 0 a chauqe démarage du serveur
 clients = set()
 
+###################################################
+##  NNote POUR MOI MEME :                     ##
+# il y'a 2 systèmes de websocket dans ce code :
+# - un pour le compteur (route /ws)
+# - un pour le tchat (route /tchat)
+# CEPENDANT LA GESTION ET LE MANGEMENT DES DEUX SYSTEMES
+# SONT INDEPENDANT Lun DE L'AUTRE.
+# IL FAUT DONC BIEN FAIRE ATTENTION A NE PAS MELANGER
+# C'EST CATASTROPHIQUE !!!!!!!!!!!!
+###################################################
+
+
+
 ##################################################
 # SYSTEM DE TCHAT WEBSOCKET POUR APPRRENDRE      #
 ##################################################
@@ -70,6 +83,37 @@ class Client:
 # route du serveur 
 ###################
 
+################################
+## EXERCICE WEBSOCKET
+################################
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    global compteur
+    await ws.accept()
+    clients.add(ws)
+
+    # envoie la valeur actuelle
+    await ws.send_text(str(compteur))
+
+    try:
+        while True:
+            msg = await ws.receive_text()
+
+            if msg == "+":
+                compteur += 1
+            elif msg == "-":
+                compteur -= 1
+
+            await broadcast()
+
+    except WebSocketDisconnect:
+        clients.discard(ws)
+
+
+################################
+## BONUS POUR APPRENDRE
+################################
 
 ##route system
 @app.get("/")
@@ -115,26 +159,3 @@ async def broadcast():
         except:
             clients.discard(ws)
 
-
-@app.websocket("/ws")
-async def websocket_endpoint(ws: WebSocket):
-    global compteur
-    await ws.accept()
-    clients.add(ws)
-
-    # envoie la valeur actuelle
-    await ws.send_text(str(compteur))
-
-    try:
-        while True:
-            msg = await ws.receive_text()
-
-            if msg == "+":
-                compteur += 1
-            elif msg == "-":
-                compteur -= 1
-
-            await broadcast()
-
-    except WebSocketDisconnect:
-        clients.discard(ws)
