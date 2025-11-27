@@ -73,3 +73,7 @@ Remplacez `<pid>` par le numéro de processus trouvé.
 
 - Utilisez `--reload` avec `uvicorn` uniquement en développement.
 - Pour la production, préférez un process manager (par ex. systemd) ou un serveur ASGI complet.
+
+
+
+![Capture d'écran du jeu](Polling.png)
