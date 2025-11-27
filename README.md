@@ -76,4 +76,5 @@ Remplacez `<pid>` par le numéro de processus trouvé.
 
 
 
-![Capture d'écran du jeu](Polling.png)
+![Polling](Polling.png)
+![WebSocket](Websocket.png)
