@@ -30,10 +30,14 @@ wsChat.onmessage = function (event) {
   var message = document.createElement("li");
   var content = document.createTextNode(event.data);
   message.appendChild(content);
-  messages.appendChild(message);
-  //A chaque fois qu'un message est reçu du serveur, on crée un nouvel élément
-  //de liste (<li>) avec le contenu du message, puis on l'ajoute à la liste
-  //des messages dans l'élément HTML avec l'ID "message-du-chat"
+  messages.insertBefore(message, messages.firstChild);
+  //Ajouter le nouveau message en haut de la liste (messages récents au bas, anciens au haut)
+
+  // Limiter à 50 messages maximum
+  while (messages.children.length > 11) {
+    messages.removeChild(messages.lastChild);
+    //Si plus de 50 messages, supprimer les plus anciens
+  }
 };
 
 function sendMessage(event) {
